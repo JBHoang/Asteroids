@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public Text liveText;
     public int score = 0;
     public Text scoreText;
+    public GameObject gameOver;
+    public GameObject startButton;
     
     public void AsteriodDestroyed(Asteriods asteriods)
     {
@@ -68,12 +70,37 @@ public class GameManager : MonoBehaviour
         this.player.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
-    private void GameOver()
+    private void Start()
     {
+        Pause();
+    }
+    
+    public void Play()
+    {
+        startButton.SetActive(false);
+        gameOver.SetActive(false);
+
+        Time.timeScale = 1f;
+        player.enabled = true;
+
         this.lives = 3;
         this.score = 0;
         this.scoreText.text = score.ToString();
         this.liveText.text = lives.ToString();
         Invoke(nameof(Respawn), this.respawnTime);
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        this.player.enabled = false;
+    }
+
+    private void GameOver()
+    {
+        startButton.SetActive(true);
+        gameOver.SetActive(true);
+
+        Pause();
     }
 }
