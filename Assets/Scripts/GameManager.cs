@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour
         this.score = 0;
         this.scoreText.text = score.ToString();
         this.liveText.text = lives.ToString();
-        Invoke(nameof(Respawn), this.respawnTime);
     }
 
     public void Pause()
@@ -102,5 +101,7 @@ public class GameManager : MonoBehaviour
         gameOver.SetActive(true);
 
         Pause();
+
+        Invoke(nameof(Respawn), this.respawnTime);
     }
 }
